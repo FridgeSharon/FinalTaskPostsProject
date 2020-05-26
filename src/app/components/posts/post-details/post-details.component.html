@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ currentPost.id }}: {{ currentPost.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">
+      By user: {{ currentPost.userId }}
+    </h6>
+    <p class="card-text">{{ currentPost.body }}</p>
+    <a
+      class="card-link"
+      [routerLink]="['']"
+      routerLinkActive="router-link-active"
+      >Back to post list</a
+    >
+    <a
+      class="card-link"
+      [routerLink]="['/postEdit', currentPost.id]"
+      routerLinkActive="router-link-active"
+      >Edit this post</a
+    >
+  </div>
+</div>

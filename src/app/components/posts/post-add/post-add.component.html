@@ -1,0 +1,48 @@
+<div class="form-group">
+  <h5 class="card-title">Add new post, PostID: {{ newPost.id }}</h5>
+  <label for="exampleInputEmail1">Post title:</label>
+  <input
+    type="text"
+    id="postTitle"
+    name="postTitle"
+    class="form-control"
+    [(ngModel)]="newPost.title"
+    #postTitle="ngModel"
+    required
+    maxlength="100"
+  />
+  <div
+    *ngIf="
+      (postTitle.invalid && postTitle.touched && postTitle.errors.required) ||
+      addButtonClicked
+    "
+    class="alert alert-danger"
+  >
+    Post title is required.
+  </div>
+  <div *ngIf="postTitle.value.length == 80" class="alert alert-warning">
+    Title max length is 80 characters.
+  </div>
+  <p class="titleCount">Title length: {{ newPost.title.length }}</p>
+</div>
+<div class="form-group">
+  <label for="exampleInputPassword1">Post content:</label>
+  <textarea
+    cols="30"
+    rows="5"
+    class="form-control"
+    [(ngModel)]="newPost.body"
+  ></textarea>
+</div>
+
+<button type="button" class="btn btn-warning" (click)="saveNewPost()">
+  Add post
+</button>
+<button
+  type="button"
+  class="btn btn-success"
+  [routerLink]="['']"
+  routerLinkActive="router-link-active"
+>
+  Cancel
+</button>

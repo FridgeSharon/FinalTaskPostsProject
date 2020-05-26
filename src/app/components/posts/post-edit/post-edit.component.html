@@ -1,0 +1,70 @@
+<div class="form-group">
+  <h5 class="card-title">Editing PostID: {{ editedPost.id }}</h5>
+  <label for="exampleInputEmail1">Post title:</label>
+  <input
+    type="text"
+    id="postTitle"
+    name="postTitle"
+    class="form-control"
+    [(ngModel)]="editedPost.title"
+    #postTitle="ngModel"
+    required
+    maxlength="80"
+  />
+  <div
+    *ngIf="postTitle.invalid && postTitle.touched && postTitle.errors.required"
+    class="alert alert-danger"
+  >
+    Post title is required.
+  </div>
+  <div *ngIf="postTitle.value.length == 80" class="alert alert-warning">
+    Title max length is 100 characters.
+  </div>
+  <p class="titleCount">Title length: {{ editedPost.title.length }}</p>
+</div>
+<div class="form-group">
+  <label for="exampleInputPassword1">Post content:</label>
+  <textarea
+    cols="30"
+    rows="5"
+    class="form-control"
+    [(ngModel)]="editedPost.body"
+  ></textarea>
+</div>
+
+<button type="button" class="btn btn-warning" (click)="saveEditedPost()">
+  Save changes
+</button>
+<button
+  type="button"
+  class="btn btn-success"
+  [routerLink]="['']"
+  routerLinkActive="router-link-active"
+>
+  Cancel
+</button>
+
+<button
+  *ngIf="!deleteButtonPressed"
+  type="button"
+  class="btn btn-danger"
+  (click)="deleteButtonPressed = true"
+>
+  Delete post
+</button>
+
+<div *ngIf="deleteButtonPressed">
+  Are you sure you want to delete this post?
+  <div>
+    <button type="button" class="btn btn-danger" (click)="deletePost()">
+      Yes
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="deleteButtonPressed = false"
+    >
+      No
+    </button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group" *ngIf="editedPost">
   <h5 class="card-title">Editing PostID: {{ editedPost.id }}</h5>
   <label for="exampleInputEmail1">Post title:</label>
   <input
@@ -17,7 +17,7 @@
   >
     Post title is required.
   </div>
-  <div *ngIf="postTitle.value.length == 80" class="alert alert-warning">
+  <div *ngIf="postTitle.value && postTitle.value.length == 80" class="alert alert-warning">
     Title max length is 100 characters.
   </div>
   <p class="titleCount">Title length: {{ editedPost.title.length }}</p>

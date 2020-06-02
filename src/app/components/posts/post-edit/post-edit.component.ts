@@ -12,7 +12,7 @@ export class PostEditComponent implements OnInit {
   currentPost: Post;
   id: any;
   sub: any;
-  editedPost: Post;
+  editedPost: Post = <Post>{};
   validPost: boolean;
   deleteButtonPressed: boolean;
 
@@ -24,32 +24,27 @@ export class PostEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.paramMap.subscribe((params) => {
-      this.id = params.get("id");
-      let posts = this.postsService.getPosts();
-      this.currentPost = posts.find((p) => p.id == this.id);
+      this.currentPost = this.postsService.getPost(params.get('id'));
+      this.editedPost = { ...this.currentPost };
     });
 
-    this.editedPost = Object.assign({}, this.currentPost);
     this.deleteButtonPressed = false;
   }
 
-  saveEditedPost(): void {
+  async saveEditedPost(): Promise<void> {
     this.validPost = true;
-    let posts = this.postsService.getPosts();
 
     if (this.editedPost.title.length < 1) {
       this.validPost = false;
     }
 
     if (this.validPost) {
-      posts.splice(posts.indexOf(this.currentPost), 1, this.editedPost);
-
-      this.router.navigateByUrl("");
+      this.postsService.replacePost(this.currentPost, this.editedPost);
+      await this.router.navigateByUrl('');
     }
   }
-  deletePost(): void {
-    let posts = this.postsService.getPosts();
-    posts.splice(posts.indexOf(this.currentPost), 1);
-    this.router.navigateByUrl("");
+  async deletePost(): Promise<void> {
+    this.postsService.deletePost(this.currentPost);
+    await this.router.navigateByUrl('');
   }
 }

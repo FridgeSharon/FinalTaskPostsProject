@@ -21,7 +21,9 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.paramMap.subscribe((params) => {
-      this.currentPost = this.postsService.getPost(params.get("id"));
+      this.id = params.get("id");
+      let posts = this.postsService.getPosts();
+      this.currentPost = posts.find((p) => p.id == this.id);
     });
   }
 }

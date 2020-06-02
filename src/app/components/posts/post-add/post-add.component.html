@@ -20,7 +20,7 @@
   >
     Post title is required.
   </div>
-  <div *ngIf="postTitle.value.length == 80" class="alert alert-warning">
+  <div *ngIf="postTitle.value && postTitle.value.length == 80" class="alert alert-warning">
     Title max length is 80 characters.
   </div>
   <p class="titleCount">Title length: {{ newPost.title.length }}</p>

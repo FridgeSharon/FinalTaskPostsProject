@@ -18,20 +18,21 @@ export class PostAddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let posts = this.postsService.getPosts();
-    this.newPost.id = posts[posts.length - 1].id + 1;
+    let lastPost = this.postsService.getLast();
+
+    this.newPost.id = lastPost.id + 1;
     this.newPost.userId = 11;
-    this.newPost.body = "";
-    this.newPost.title = "";
+    this.newPost.body = '';
+    this.newPost.title = '';
   }
 
-  saveNewPost(): void {
+  async saveNewPost(): Promise<void> {
     if (this.newPost.title.length != 0) {
       if (this.newPost.body.length == 0) {
         this.newPost.title += " (empty content)";
       }
       this.postsService.addPost(this.newPost);
-      this.router.navigateByUrl("");
+      await this.router.navigateByUrl("");
     }
     this.addButtonClicked = true;
   }
